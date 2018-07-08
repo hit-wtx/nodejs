@@ -5,7 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
+var crawlerCNodeJsRouter = require('./routes/crawlerCNodeJs');
+var crawlerCNodeJsRouterWithEventProxy = require('./routes/crawlerCNodeJsEventProxy');
+//var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
 
 var app = express();
 
@@ -20,7 +24,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+// http://localhost:3000/crawler/cnodejs get 请求到 cnodejs router
+app.use('/crawler/cnodejs', crawlerCNodeJsRouter);
 app.use('/users', usersRouter);
+app.use('/crawler/cnodejswithep', crawlerCNodeJsRouterWithEventProxy);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
